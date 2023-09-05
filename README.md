@@ -54,6 +54,14 @@ yarn start
 
 > Note: You can disable dev server logs by uncommenting line `disable: process.env.NODE_ENV=== "development"`
 
+5 . Testing notification on local
+
+1. Install the from chrome web browser
+
+2. Open the PWA, click "Allow Notification" button => This will ask for permission & put the subscription in DB
+
+3. Once its successful you will see "Notify All" => This button makes "POST" request to "/api/push/notify-all" which will send notification to all the subscribers
+
 ### Important files
 
 1. We have extended [`next-pwa`](https://github.com/shadowwalker/next-pwa) default service-worker at `packages/worker/index.ts`
