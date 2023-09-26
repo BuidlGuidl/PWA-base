@@ -46,6 +46,8 @@ const firebaseConfig = {
 
 ### 3 . Setting VAPID Keys
 
+VAPID keys are a public-private key pair used to securely identify the server sending web push notifications.
+
 Run the following command to generate Public and Private VAPID :
 
 ```bash
