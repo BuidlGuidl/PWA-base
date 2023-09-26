@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import webpush, { PushSubscription } from "web-push";
 import { saveSubscriptionToDb } from "~~/database/firebase/utils";
 
-const PUBLIC_KEY_VAPID = process.env.PUBLIC_KEY_VAPID ?? "";
+const PUBLIC_KEY_VAPID = process.env.NEXT_PUBLIC_PUBLIC_KEY_VAPID ?? "";
 const PRIVATE_KEY_VAPID = process.env.PRIVATE_KEY_VAPID ?? "";
 webpush.setVapidDetails("mailto:admin@buidlguidl.com", PUBLIC_KEY_VAPID, PRIVATE_KEY_VAPID);
 

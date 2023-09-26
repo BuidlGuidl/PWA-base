@@ -22,7 +22,7 @@ yarn install
 
 > Note : You can also use other database as well, we are using Firebase for this example checkout `packages/nextjs/database/firebase`.
 
-Copy `packages/nextjs/.env.example` into `packages/nextjs/.env` file and fill in your Firebase credentials which starts with `FB`.
+Copy `packages/nextjs/.env.example` into `packages/nextjs/.env.local` file and fill in your Firebase credentials which starts with `FB`.
 
 Checkout [this article](https://softauthor.com/add-firebase-to-javascript-web-app/#add-firebase-sdk-to-javascript-web-app) on how to get config variables from Firebase.
 
@@ -52,8 +52,7 @@ Run the following command to generate Public and Private VAPID :
 yarn web-push-generate
 ```
 
-- Set `PUBLIC_KEY_VAPID` and `PRIVATE_KEY_VAPID` variables in `packages/nextjs/.env` file.
-- Set `NEXT_PUBLIC_PUBLIC_KEY_VAPID` in `packages/nextjs/.env.local` file.
+Set `NEXT_PUBLIC_PUBLIC_KEY_VAPID` and `PRIVATE_KEY_VAPID` variables in `packages/nextjs/.env.local` file.
 
 ### 4 . Starting the app
 
@@ -91,11 +90,11 @@ yarn vercel --prod
 
 #### 6.1 . Setting Environment Variables
 
-When you deploy to Vercel you have to set all the environment variables from your `packages/nextjs/.env` and `packages/nextjs/.env.local` files into your Vercel Environment Variables section.
+When you deploy to Vercel you have to set all the environment variables from your `packages/nextjs/.env.local` file into your Vercel Environment Variables section.
 
 You can do this in the Vercel Project dashboard under _"Settings > Environment Variables"_.
 
-> Hint: You can mass copy all the config variables from your`packages/nextjs/.env` and `packages/nextjs/.env.local` config files and paste them into the Vercel form.
+> Hint: You can mass copy all the config variables from your `packages/nextjs/.env.local` config files and paste them into the Vercel form.
 
 ![VercelEnvironmentVariables](https://github.com/BuidlGuidl/PWA-burner-wallet/assets/55535804/8d1a56cf-a7c0-4ebe-8949-18673d6542e7)
 
