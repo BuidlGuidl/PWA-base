@@ -22,7 +22,7 @@ yarn install
 
 > Note : You can also use other database as well, we are using Firebase for this example checkout `packages/nextjs/database/firebase`.
 
-Copy `packages/nextjs/.env.example` into `packages/nextjs/.env.local` file and fill in your Firebase credentials which starts with `FB`.
+Copy `packages/nextjs/.env.example` into `packages/nextjs/.env.local` file and fill in your Firebase credentials which starts with `FIREBASE`.
 
 Checkout [this article](https://softauthor.com/add-firebase-to-javascript-web-app/#add-firebase-sdk-to-javascript-web-app) on how to get config variables from Firebase.
 
@@ -33,12 +33,12 @@ We use the Firebase config variables in our `packages/nextjs/database/firebase/c
 ```js
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FB_API_KEY,
-  authDomain: process.env.FB_AUTH_DOMAIN,
-  projectId: process.env.FB_PROJECT_ID,
-  storageBucket: process.env.FB_STRG_BUCKET,
-  messagingSenderId: process.env.FB_MESSAGING_SENDER_ID,
-  appId: process.env.FB_APP_ID,
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STRG_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
 };
 ```
 
