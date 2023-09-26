@@ -116,8 +116,6 @@ You can do this in the Vercel Project dashboard under _"Settings > Environment V
 
 > Hint: You can mass copy all the config variables from your `packages/nextjs/.env.local` config files and paste them into the Vercel form.
 
-![VercelEnvironmentVariables](https://github.com/BuidlGuidl/PWA-burner-wallet/assets/55535804/8d1a56cf-a7c0-4ebe-8949-18673d6542e7)
-
 ## Development and References
 
 ### Important Development files
