@@ -74,6 +74,8 @@ Visit your app on: `http://localhost:3000`.
 
 ### 6 . Deploying your PWA to Vercel
 
+> Hint: We recommend connecting your GitHub repo to Vercel (through the Vercel UI) so it gets automatically deployed when pushing to main.
+
 To deploy directly from the CLI, run this and follow the steps to deploy to Vercel:
 
 ```
