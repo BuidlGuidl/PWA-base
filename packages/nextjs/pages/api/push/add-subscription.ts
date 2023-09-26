@@ -4,7 +4,7 @@ import { saveSubscriptionToDb } from "~~/database/firebase/utils";
 
 const PUBLIC_KEY_VAPID = process.env.PUBLIC_KEY_VAPID ?? "";
 const PRIVATE_KEY_VAPID = process.env.PRIVATE_KEY_VAPID ?? "";
-webpush.setVapidDetails("mailto:shivbhonde04@gmail.com", PUBLIC_KEY_VAPID, PRIVATE_KEY_VAPID);
+webpush.setVapidDetails("mailto:admin@buidlguidl.com", PUBLIC_KEY_VAPID, PRIVATE_KEY_VAPID);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
