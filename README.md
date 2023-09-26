@@ -22,27 +22,38 @@ yarn install
 
 > Note : You can also use other database as well, we are using Firebase for this example checkout `packages/nextjs/database/firebase`.
 
-Copy `packages/nextjs/.env.example` into `packages/nextjs/.env.local` file and fill in your Firebase credentials which starts with `FIREBASE`.
-
-Checkout [this article](https://softauthor.com/add-firebase-to-javascript-web-app/#add-firebase-sdk-to-javascript-web-app) on how to get config variables from Firebase.
-
-> Hint: If it's your first time using Firebase, please read the article from the beginning, as you'll need to create a Firebase project and register a web app first.
-
-We use the Firebase config variables in our `packages/nextjs/database/firebase/config` file:
+Create your [Firebase project](https://console.firebase.google.com/) and register a web app. It'll give you a config object that looks like this:
 
 ```js
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STRG_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "...",
 };
 ```
 
-> Hint : Make sure you have read and write [rules](https://firebase.google.com/docs/firestore/security/get-started#testing_rules) allowed in Firebase.
+Copy `packages/nextjs/.env.example` into `packages/nextjs/.env` file and fill in your Firebase credentials which starts with `FIREBASE_`.
+
+The next step is to create your Firestore database from your [Firebase console](https://console.firebase.google.com/) (_sidebar menu > Build > Firestore Database_). You can start your database in **test mode**, and then change the [rules](https://console.firebase.google.com/project/_/firestore/rules?_gl=1*aqmcm*_ga*MTQxNzU0MTYyMi4xNjk0MTY1NjY2*_ga_CW55HF8NVT*MTY5NTc2ODQwNS4xNC4xLjE2OTU3NzE0MDAuMC4wLjA.) to the following:
+
+```
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // This rule allows anyone with your Firestore database reference to view, edit,
+    // and delete all data in your Firestore subscriptions collection
+    match /subscriptions/{subscription} {
+      allow read, write: if true;
+    }
+  }
+}
+```
 
 ### 3 . Setting VAPID Keys
 
