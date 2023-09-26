@@ -54,13 +54,29 @@ yarn web-push-generate
 
 Set `NEXT_PUBLIC_PUBLIC_KEY_VAPID` and `PRIVATE_KEY_VAPID` variables in `packages/nextjs/.env.local` file.
 
-### 4 . Starting the app
+### 4 . Starting the PWA
+
+To set up your local environment and start the PWA, run the following commands in different terminal windows:
+
+1. In the first terminal, start your local network (a blockchain emulator in your computer):
+
+```bash
+yarn chain
+```
+
+2. In a second terminal window, deploy your contract (locally):
+
+```bash
+yarn deploy
+```
+
+3. In a third terminal window, start your PWA:
 
 ```bash
 yarn start
 ```
 
-Visit your app on: `http://localhost:3000`.
+Visit your web app on: `http://localhost:3000`.
 
 > Note: You can disable dev server logs by uncommenting line `disable: process.env.NODE_ENV=== "development"` in `packages/nextjs/next.config.mjs` file.
 
