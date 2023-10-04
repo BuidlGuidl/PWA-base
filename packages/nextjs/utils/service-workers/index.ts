@@ -13,7 +13,7 @@ export const subscribe = async () => {
   try {
     const swRegistration = await navigator.serviceWorker.getRegistration("/sw.js");
     const premissionResult = await window?.Notification.requestPermission();
-    if (premissionResult === "denied") alert("Premisson already denied, please enable notifications manually");
+    if (premissionResult === "denied") alert("Permission already denied, please enable notifications manually");
     if (!swRegistration) {
       throw new Error("Service worker not registered");
     }
