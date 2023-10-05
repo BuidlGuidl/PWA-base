@@ -13,7 +13,7 @@ const triggerPush = async (subscription: Subscription, dataToSend: string) => {
   } catch (err: any) {
     if (err.statusCode === 410 || err.statusCode === 404) {
       console.log("Subscription has expired or is no longer valid: ", subscription._id);
-      await deleteSubscriptionFromDatabase(subscription._id);
+      await deleteSubscriptionFromDatabase(subscription.pushSubscription);
     } else {
       console.log("Subscription is no longer valid: ", err);
       throw err;
