@@ -46,3 +46,18 @@ export const deleteMySubscriptionInDB = async (subscription: PushSubscription) =
   console.log("Response", data);
   return data;
 };
+
+export const saveSubscriptionInDB = async (subscription: PushSubscription) => {
+  const ORIGIN = window.location.origin;
+  const BACKEND_URL = `${ORIGIN}/api/push/add-subscription`;
+
+  const response = await fetch(BACKEND_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(subscription),
+  });
+  console.log("Sever Response", response);
+  return response.json();
+};
