@@ -47,13 +47,15 @@ export const subscribeToNotifications = async () => {
     notification.remove(notificationId);
     notification.success("Successfully subscribed to notifications");
     return subscription;
-  } catch (err) {
+  } catch (err: any) {
     if (err instanceof Error) {
       switch (err.message) {
         case "Not Registered":
           throw new Error("Service Worker not registered, please try again later");
         case "ServiceWorker Installing":
           throw new Error("Service Worker is installing, please try again");
+        default:
+          throw new Error(`Error while subscribing to notifications ${err?.message}`);
       }
     }
     console.error("Inside subscribe function: ", err);
