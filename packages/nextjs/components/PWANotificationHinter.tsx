@@ -6,7 +6,7 @@ import { askForPermission, notificationsSupported, subscribeToNotifications } fr
 
 export const PWANotificationHinter = () => {
   const [isAskForPermissionLoading, setIsAskForPermissionLoading] = useState(false);
-  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [isSubscribeLoading, setIsSubscribeLoading] = useState(false);
   const { setPushNotificationSubscription } = useGlobalState(state => state);
   const isClient = useIsClient();
 
@@ -46,9 +46,9 @@ export const PWANotificationHinter = () => {
   return (
     <button
       className="btn btn-primary"
-      disabled={isSubscribing}
+      disabled={isSubscribeLoading}
       onClick={async () => {
-        setIsSubscribing(true);
+        setIsSubscribeLoading(true);
         try {
           const subscription = await subscribeToNotifications();
           setPushNotificationSubscription(subscription);
@@ -58,11 +58,11 @@ export const PWANotificationHinter = () => {
           }
           setPushNotificationSubscription(null);
         } finally {
-          setIsSubscribing(false);
+          setIsSubscribeLoading(false);
         }
       }}
     >
-      {isSubscribing ? <span className="loading loading-dots loading-xs"></span> : "Subscribe to notifications"}
+      {isSubscribeLoading ? <span className="loading loading-dots loading-xs"></span> : "Subscribe to notifications"}
     </button>
   );
 };

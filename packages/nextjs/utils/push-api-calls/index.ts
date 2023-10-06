@@ -15,8 +15,8 @@ export const notifyAllSubscribers = async (message: string) => {
   console.log("Response", data);
 };
 
-export const checkMySubscriptionInDB = async (subscription: PushSubscription) => {
-  const res = await fetch("/api/push/checkMySubscription", {
+export const checkMySubscription = async (subscription: PushSubscription) => {
+  const res = await fetch("/api/push/checkIsSubscriptionPresent", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const checkMySubscriptionInDB = async (subscription: PushSubscription) =>
   return data;
 };
 
-export const deleteMySubscriptionInDB = async (subscription: PushSubscription) => {
+export const deleteSubscription = async (subscription: PushSubscription) => {
   const res = await fetch("/api/push/deleteSubscription", {
     method: "POST",
     headers: {
@@ -47,7 +47,7 @@ export const deleteMySubscriptionInDB = async (subscription: PushSubscription) =
   return data;
 };
 
-export const saveSubscriptionInDB = async (subscription: PushSubscription) => {
+export const saveSubscription = async (subscription: PushSubscription) => {
   const ORIGIN = window.location.origin;
   const BACKEND_URL = `${ORIGIN}/api/push/add-subscription`;
 

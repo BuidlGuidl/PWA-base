@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import webpush, { PushSubscription } from "web-push";
-import { isMySubscriptionPresent } from "~~/database/firebase/utils";
+import { isSubscriptionPresentInDB } from "~~/database/firebase/utils";
 
 const PUBLIC_KEY_VAPID = process.env.NEXT_PUBLIC_PUBLIC_KEY_VAPID ?? "";
 const PRIVATE_KEY_VAPID = process.env.PRIVATE_KEY_VAPID ?? "";
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const subscription = req.body as PushSubscription;
 
   try {
-    const isPresent = await isMySubscriptionPresent(subscription);
+    const isPresent = await isSubscriptionPresentInDB(subscription);
     res.status(200).json({ isPresent });
   } catch (e) {
     console.log("Error :", e);

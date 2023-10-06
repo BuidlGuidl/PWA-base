@@ -9,7 +9,7 @@ type Subscription = {
 
 const subscriptionCollectionRef = collection(firebaseDB, COLLECTION_NAME);
 
-export const saveSubscriptionToDb = async (subscription: PushSubscription) => {
+export const saveSubscriptionInDb = async (subscription: PushSubscription) => {
   try {
     await addDoc(subscriptionCollectionRef, subscription);
   } catch (e) {
@@ -32,7 +32,7 @@ export const getAllSubsriptionsFromDb = async () => {
   }
 };
 
-export const isMySubscriptionPresent = async (subscription: PushSubscription) => {
+export const isSubscriptionPresentInDB = async (subscription: PushSubscription) => {
   try {
     const q = query(subscriptionCollectionRef, where("endpoint", "==", subscription.endpoint));
     const querySnapshot = await getDocs(q);
@@ -42,7 +42,7 @@ export const isMySubscriptionPresent = async (subscription: PushSubscription) =>
   }
 };
 
-export const deleteSubscriptionFromDatabase = async (subscription: PushSubscription) => {
+export const deleteSubscriptionFromDB = async (subscription: PushSubscription) => {
   try {
     const q = query(subscriptionCollectionRef, where("endpoint", "==", subscription.endpoint));
     const querySnapshot = await getDocs(q);

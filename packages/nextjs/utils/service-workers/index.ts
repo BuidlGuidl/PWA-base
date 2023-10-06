@@ -1,4 +1,4 @@
-import { saveSubscriptionInDB } from "../push-api-calls";
+import { saveSubscription } from "../push-api-calls";
 import { notification } from "../scaffold-eth";
 
 export const notificationsSupported = () => {
@@ -43,7 +43,7 @@ export const subscribeToNotifications = async () => {
       userVisibleOnly: true,
     };
     const subscription = await swRegistration.pushManager.subscribe(options);
-    await saveSubscriptionInDB(subscription);
+    await saveSubscription(subscription);
     notification.remove(notificationId);
     notification.success("Successfully subscribed to notifications");
     return subscription;

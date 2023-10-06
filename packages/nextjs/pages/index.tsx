@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import { MetaHeader } from "~~/components/MetaHeader";
 import { PWANotificationHinter } from "~~/components/PWANotificationHinter";
 import { useGlobalState } from "~~/services/store/store";
-import { deleteMySubscriptionInDB, notifyAllSubscribers } from "~~/utils/push-api-calls";
+import { deleteSubscription, notifyAllSubscribers } from "~~/utils/push-api-calls";
 import { notification } from "~~/utils/scaffold-eth";
 
 const Home: NextPage = () => {
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
         setPushNotificationSubscription(null);
         return;
       }
-      await deleteMySubscriptionInDB(subscription);
+      await deleteSubscription(subscription);
       await subscription?.unsubscribe();
       setPushNotificationSubscription(null);
     } catch {

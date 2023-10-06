@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PushSubscription } from "web-push";
-import { deleteSubscriptionFromDatabase } from "~~/database/firebase/utils";
+import { deleteSubscriptionFromDB } from "~~/database/firebase/utils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
   const subscription = req.body as PushSubscription;
   try {
-    await deleteSubscriptionFromDatabase(subscription);
+    await deleteSubscriptionFromDB(subscription);
     res.status(200).json({ message: "Subscription deleted" });
   } catch (e) {
     console.log("Error :", e);

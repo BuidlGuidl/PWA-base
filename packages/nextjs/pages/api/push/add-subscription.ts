@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import webpush, { PushSubscription } from "web-push";
-import { saveSubscriptionToDb } from "~~/database/firebase/utils";
+import { saveSubscriptionInDb } from "~~/database/firebase/utils";
 
 const PUBLIC_KEY_VAPID = process.env.NEXT_PUBLIC_PUBLIC_KEY_VAPID ?? "";
 const PRIVATE_KEY_VAPID = process.env.PRIVATE_KEY_VAPID ?? "";
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const subscription = req.body as PushSubscription;
 
   try {
-    await saveSubscriptionToDb(subscription);
+    await saveSubscriptionInDb(subscription);
     res.status(200).json({ message: "Subscription added." });
   } catch (e) {
     console.log("Error :", e);
