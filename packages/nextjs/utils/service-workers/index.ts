@@ -29,7 +29,7 @@ export const subscribeToNotifications = async () => {
     await navigator.serviceWorker.ready;
     notification.remove(notificationId);
 
-    notificationId = notification.loading("Subscribing to notifications");
+    notificationId = notification.loading("Subscribing to notification");
     const swRegistration = await navigator.serviceWorker.getRegistration("/sw.js");
     if (!swRegistration) {
       throw new Error("Not Registered");
@@ -45,7 +45,7 @@ export const subscribeToNotifications = async () => {
     const subscription = await swRegistration.pushManager.subscribe(options);
     await saveSubscription(subscription);
     notification.remove(notificationId);
-    notification.success("Successfully subscribed to notifications");
+    notification.success("Successfully subscribed to notification");
     return subscription;
   } catch (err: any) {
     if (err instanceof Error) {
