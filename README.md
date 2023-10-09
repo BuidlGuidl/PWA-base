@@ -140,7 +140,7 @@ You can do this in the Vercel Project dashboard under _"Settings > Environment V
 
 > Hint: You can mass copy all the config variables from your `packages/nextjs/.env.local` config files and paste them into the Vercel form.
 
-> Note: If you run `yarn vercel` from the CLI, after setting all environment variables in Vercel, you will need to perform a second deployment to refresh them, by running `yarn vercel` again.
+After setting all the environment variables, **you will need to perform a new deployment to refresh them**. You can do it through the Vercel UI at _"Deployments > Redeploy"_ or by running `yarn vercel` again.
 
 ## Development and References
 
