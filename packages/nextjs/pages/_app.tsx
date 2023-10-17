@@ -8,6 +8,7 @@ import { useDarkMode } from "usehooks-ts";
 import { WagmiConfig } from "wagmi";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
+import { QrCodeReader } from "~~/components/QrCodeReader";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
 import { useNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
 import { useGlobalState } from "~~/services/store/store";
@@ -61,6 +62,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
           <Footer />
         </div>
         <Toaster />
+        <QrCodeReader />
       </RainbowKitProvider>
     </WagmiConfig>
   );

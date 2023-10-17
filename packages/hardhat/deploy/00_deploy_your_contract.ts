@@ -1,5 +1,5 @@
-import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 /**
  * Deploys a contract named "YourContract" using the deployer account and
@@ -21,22 +21,33 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  const ownerAddress = deployer;
+
+  const eventGems = await deploy("EventGems", {
     from: deployer,
     // Contract constructor arguments
-    args: [deployer],
+    args: [ownerAddress],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
-  // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
+  const eventGemsContract = await hre.ethers.getContract("EventGems", deployer);
+
+  await eventGemsContract.grantRole(
+    hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
+    eventGems.address,
+  );
+
+  await eventGemsContract.grantRole(
+    hre.ethers.utils.keccak256(hre.ethers.utils.toUtf8Bytes("MINTER_ROLE")),
+    "0x7E77A121d7B374D46CD25d9772bbdDC56576c413",
+  );
 };
 
 export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployYourContract.tags = ["EventGems"];

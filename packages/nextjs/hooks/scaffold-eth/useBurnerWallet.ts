@@ -4,7 +4,7 @@ import { Hex, HttpTransport, PrivateKeyAccount, createWalletClient, http } from 
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { Chain, WalletClient, usePublicClient } from "wagmi";
 
-const burnerStorageKey = "scaffoldEth2.burnerWallet.sk";
+export const burnerStorageKey = "scaffoldEth2.burnerWallet.sk";
 
 /**
  * Is the private key valid
@@ -51,6 +51,15 @@ export const loadBurnerSK = (): Hex => {
     saveBurnerSK(newDefaultPriaveKey);
     return newDefaultPriaveKey;
   }
+};
+
+export const isBurnerWalletloaded = (): boolean => {
+  let currentSk = "";
+  if (typeof window != "undefined" && window != null) {
+    currentSk = window?.localStorage?.getItem?.(burnerStorageKey)?.replaceAll('"', "") ?? "";
+  }
+
+  return !!currentSk && isValidSk(currentSk);
 };
 
 /**

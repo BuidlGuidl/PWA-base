@@ -4,18 +4,23 @@ export type ScaffoldConfig = {
   targetNetwork: chains.Chain;
   pollingInterval: number;
   alchemyApiKey: string;
+  liveUrl: string;
   walletConnectProjectId: string;
   onlyLocalBurnerWallet: boolean;
   walletAutoConnect: boolean;
+  tokenEmoji: string;
 };
 
 const scaffoldConfig = {
   // The network where your DApp lives in
   targetNetwork: chains.hardhat,
+  liveUrl: process.env.NEXT_PUBLIC_LIVE_URL || "http://localhost:3000/example-ui",
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
   pollingInterval: 30000,
+
+  tokenEmoji: "💎",
 
   // This is ours Alchemy's default API key.
   // You can get your own at https://dashboard.alchemyapi.io
