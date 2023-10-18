@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { isAddress, parseEther } from "viem";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { AddressInput, InputBase } from "~~/components/scaffold-eth";
-// TODO: DELETE
-// import { GemHistory } from "~~/components/screens/Send/GemsHistory";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { useAppStore } from "~~/services/store/store";
+import { useGlobalState } from "~~/services/store/store";
+import { notifySubscriber } from "~~/utils/push-api-calls";
 import { notification } from "~~/utils/scaffold-eth";
 
 /**
@@ -15,6 +15,7 @@ export const Send = () => {
   const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState("");
   const payload = useAppStore(state => state.screenPayload);
+  const { pushNotificationSubscription } = useGlobalState(state => state);
 
   useEffect(() => {
     if (payload?.toAddress) {
@@ -22,7 +23,11 @@ export const Send = () => {
     }
   }, [payload]);
 
-  const { writeAsync: transfer, isMining } = useScaffoldContractWrite({
+  const {
+    writeAsync: transfer,
+    isMining,
+    isSuccess,
+  } = useScaffoldContractWrite({
     contractName: "EventGems",
     functionName: "transfer",
     args: [toAddress, parseEther(amount || "0")],
@@ -41,6 +46,11 @@ export const Send = () => {
     }
 
     await transfer();
+    if (isSuccess) {
+      if (pushNotificationSubscription) {
+        await notifySubscriber(pushNotificationSubscription, `You have successfully sent ${amount} EventGems`);
+      }
+    }
     setAmount("");
   };
 

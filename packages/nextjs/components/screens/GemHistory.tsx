@@ -4,12 +4,15 @@ import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
 import { useScaffoldEventHistory, useScaffoldEventSubscriber } from "~~/hooks/scaffold-eth";
 import scaffoldConfig from "~~/scaffold.config";
+import { useGlobalState } from "~~/services/store/store";
+import { notifySubscriber } from "~~/utils/push-api-calls";
 
 /**
  * Unified GemHistory component to display both sent and received events
  */
 export const GemHistory = () => {
   const { address } = useAccount();
+  const { pushNotificationSubscription } = useGlobalState(state => state);
 
   type EventData = {
     from: string;
@@ -43,6 +46,9 @@ export const GemHistory = () => {
         if (from && to && value) {
           if (from.toLowerCase() === address?.toLowerCase() || to.toLowerCase() === address?.toLowerCase()) {
             setTransferEvents(prevEvents => [{ from, to, value }, ...prevEvents]);
+          }
+          if (pushNotificationSubscription && to.toLowerCase() === address?.toLowerCase()) {
+            notifySubscriber(pushNotificationSubscription, `You have received ${formatEther(value)} EventGems`);
           }
         }
       });
