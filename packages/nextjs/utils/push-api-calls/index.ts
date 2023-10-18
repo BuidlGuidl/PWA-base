@@ -15,6 +15,25 @@ export const notifyAllSubscribers = async (message: string) => {
   console.log("Response", data);
 };
 
+export const notifySubscriber = async (subscription: PushSubscription, message: string) => {
+  const res = await fetch("/api/push/notify-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      subscription,
+      message,
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message);
+  }
+  console.log("Response", data);
+  return data;
+};
+
 export const checkMySubscription = async (subscription: PushSubscription) => {
   const res = await fetch("/api/push/checkIsSubscriptionPresent", {
     method: "POST",
