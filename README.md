@@ -10,7 +10,7 @@ To learn more about base Scaffold-ETH 2 features and development guide, check ou
 
 To get started with Scaffold-ETH 2 PWA, follow the steps below:
 
-### 1 . Clone this repo & install dependencies
+### 1. Clone this repo & install dependencies
 
 ```bash
 gh repo clone BuidlGuidl/PWA-burner-wallet
@@ -18,7 +18,7 @@ cd PWA-burner-wallet
 yarn install
 ```
 
-### 2 . Setting up Firebase
+### 2. Setting up Firebase
 
 > Note : You can also use other database as well, we are using Firebase for this example checkout `packages/nextjs/database/firebase`.
 
@@ -55,7 +55,7 @@ service cloud.firestore {
 }
 ```
 
-### 3 . Setting VAPID Keys
+### 3. Setting VAPID Keys
 
 VAPID keys are a public-private key pair used to securely identify the server sending web push notifications.
 
@@ -67,7 +67,7 @@ yarn web-push-generate
 
 Set `NEXT_PUBLIC_PUBLIC_KEY_VAPID` and `PRIVATE_KEY_VAPID` variables in `packages/nextjs/.env.local` file.
 
-### 4 . Starting the PWA
+### 4. Starting the PWA
 
 To set up your local environment and start the PWA, run the following commands in different terminal windows:
 
@@ -93,7 +93,7 @@ Visit your web app on: `http://localhost:3000`.
 
 > Note: You can disable dev server logs by uncommenting line `disable: process.env.NODE_ENV=== "development"` in `packages/nextjs/next.config.mjs` file.
 
-### 5 . Testing notification on local
+### 5. Testing notification on local
 
 1. Install the PWA from Chrome web browser.
 
@@ -101,7 +101,20 @@ Visit your web app on: `http://localhost:3000`.
 
 3. Once its successful you will see _"Notify All"_ button => This button makes "POST" request to `packages/nextjs/pages/api/push/notify-all.ts` which will send notification to all the subscribers
 
-### 6 . Deploying your PWA to Vercel
+### 6. Deploying your contracts on a public network
+
+1. Edit the `defaultNetwork` in `packages/hardhat/hardhat.config.ts` to [your choice of public EVM networks](https://ethereum.org/en/developers/docs/networks/)
+
+2. You will need to generate a **deployer address** using `yarn generate`. This creates a mnemonic and saves it locally.
+
+3. Run `yarn deploy` to deploy your smart contract to the public network selected in `packages/hardhat/hardhat.config.ts`
+
+4. Edit your frontend config in `packages/nextjs/scaffold.config.ts` to change the `targetNetwork`.
+
+> Hint: You will need to send ETH to your deployer address to deploy your contracts.  
+> Use `yarn account` to view your deployer account balances.
+
+### 7. Deploying your PWA to Vercel
 
 > Hint: We recommend connecting your GitHub repo to Vercel (through the Vercel UI) so it gets automatically deployed when pushing to main.
 
@@ -119,13 +132,15 @@ If you want to redeploy to the same production URL you can run:
 yarn vercel --prod
 ```
 
-#### 6.1 . Setting Environment Variables
+#### 7.1 Setting Environment Variables
 
 When you deploy to Vercel you have to set all the environment variables from your `packages/nextjs/.env.local` file into your Vercel Environment Variables section.
 
 You can do this in the Vercel Project dashboard under _"Settings > Environment Variables"_.
 
 > Hint: You can mass copy all the config variables from your `packages/nextjs/.env.local` config files and paste them into the Vercel form.
+
+After setting all the environment variables, **you will need to perform a new deployment to refresh them**. You can do it through the Vercel UI at _"Deployments > Redeploy"_ or by running `yarn vercel` again.
 
 ## Development and References
 
