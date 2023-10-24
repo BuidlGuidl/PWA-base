@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 /**
- * ERC20 token contract for Events.
+ * ERC20 token contract for Wallet testing.
  */
 contract EventGems is ERC20, AccessControl {
 	bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -27,7 +27,12 @@ contract EventGems is ERC20, AccessControl {
 		renounceRole(DEFAULT_ADMIN_ROLE, msg.sender);
 	}
 
+	/* Commented out for testing purposes, creating a mint function that can be called by anyone instead of just the minter role
 	function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+		_mint(to, amount);
+	}
+	*/
+	function mint(address to, uint256 amount) public {
 		_mint(to, amount);
 	}
 
