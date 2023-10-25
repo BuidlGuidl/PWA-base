@@ -14,7 +14,7 @@ export type ScaffoldConfig = {
 const scaffoldConfig = {
   // The network where your DApp lives in
   targetNetwork: chains.hardhat,
-  liveUrl: process.env.NEXT_PUBLIC_LIVE_URL || "http://localhost:3000/example-ui",
+  liveUrl: process.env.NEXT_PUBLIC_LIVE_URL || "http://localhost:3000/wallet",
 
   // The interval at which your front-end polls the RPC servers for new data
   // it has no effect on the local network
