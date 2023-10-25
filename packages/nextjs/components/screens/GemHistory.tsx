@@ -24,72 +24,73 @@ export const GemHistory = () => {
     to: string;
     value: bigint;
     blockNumber: bigint;
+    transactionHash: string;
     date: string;
   };
 
   /*const simulatedEvents = [
     {
-      from: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      from: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       to: address,
       value: 4000000000000000000,
       blockNumber: 5n,
-      date: "Oct 20, 2023", // Modify the date here
+      date: "Oct 20, 2023", 
     },
     {
-      from: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      from: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       to: address,
       value: 14000000000000000000,
       blockNumber: 2n,
-      date: "Oct 20, 2023", // Modify the date here
+      date: "Oct 20, 2023", 
     },
     {
-      from: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      from: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       to: address,
       value: 24000000000000000000,
       blockNumber: 5n,
-      date: "Oct 20, 2023", // Modify the date here
+      date: "Oct 20, 2023", 
     },
     {
       from: address,
-      to: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      to: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       value: 6000000000000000000,
       blockNumber: 1n,
-      date: "Oct 20, 2023", // Modify the date here
+      date: "Oct 20, 2023", 
     },
     {
       from: address,
-      to: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      to: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       value: 3000000000000000000,
       blockNumber: 8n,
-      date: "Oct 20, 2023", // Modify the date here
+      date: "Oct 20, 2023", 
     },
     {
-      from: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      from: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       to: address,
       value: 3000000000000000000,
       blockNumber: 4n,
-      date: "Oct 19, 2023", // Modify the date here
+      date: "Oct 19, 2023", 
     },
     {
       from: address,
-      to: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      to: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       value: 2000000000000000000,
       blockNumber: 3n,
-      date: "Oct 19, 2023", // Modify the date here
+      date: "Oct 19, 2023", 
     },
     {
-      from: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      from: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       to: address,
       value: 1000000000000000000,
       blockNumber: 2n,
-      date: "Oct 18, 2023", // Modify the date here
+      date: "Oct 18, 2023", 
     },
     {
       from: address,
-      to: "0xAACEaca8836A2624eE782b6365737CA181DB72Ae",
+      to: "0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5",
       value: 5000000000000000000,
       blockNumber: 1n,
-      date: "Oct 18, 2023", // Modify the date here
+      date: "Oct 18, 2023", 
     },
   ];*/
 
@@ -119,12 +120,10 @@ export const GemHistory = () => {
     contractName: "EventGems",
     eventName: "Transfer",
     listener: async logs => {
-      // Mark the function as async
       for (const log of logs) {
-        // Use for loop to handle async/await inside map
-
         const { from, to, value } = log.args;
         const blockNumber = log.blockNumber;
+        const transactionHash = log.transactionHash;
 
         try {
           const block = await publicClient.getBlock({
@@ -141,7 +140,7 @@ export const GemHistory = () => {
           console.log("Received Transfer Event:", from, to, value, log);
           if (from && to && value) {
             if (from.toLowerCase() === address?.toLowerCase() || to.toLowerCase() === address?.toLowerCase()) {
-              setTransferEvents(prevEvents => [{ from, to, value, blockNumber, date }, ...prevEvents]);
+              setTransferEvents(prevEvents => [{ from, to, value, blockNumber, transactionHash, date }, ...prevEvents]);
             }
             if (pushNotificationSubscription && to.toLowerCase() === address?.toLowerCase()) {
               notifySubscriber(pushNotificationSubscription, `You have received ${formatEther(value)} EventGems`);
@@ -172,6 +171,7 @@ export const GemHistory = () => {
           to: event.log.args.to,
           value: event.log.args.value,
           blockNumber: event.log.blockNumber,
+          transactionHash: event.log.transactionHash,
           // set the date to the humanized block timestamp to shoW it in this format: Oct 20, 2023
           date: new Date(Number(event.block.timestamp) * 1000).toLocaleDateString("en-US", {
             month: "short",
@@ -203,6 +203,11 @@ export const GemHistory = () => {
   const eventsGroupedByDate: { [key: string]: EventData[] } = transferEvents.reduce(
     (grouped: { [key: string]: EventData[] }, eventData) => {
       const date = eventData.date;
+
+      // prevent duplicates in the array
+      if (grouped[date]?.some(event => event.transactionHash === eventData.transactionHash)) {
+        return grouped;
+      }
 
       if (!grouped[date]) {
         grouped[date] = [];
